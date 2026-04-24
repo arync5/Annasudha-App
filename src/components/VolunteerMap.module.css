@@ -1,0 +1,209 @@
+.wrapper {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Address card ── */
+.addressCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: linear-gradient(135deg, #1a0005 0%, #2a0010 100%);
+  border: 1px solid rgba(196,18,48,0.3);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.addressCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(196,18,48,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.addressIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.addressBody {
+  flex: 1;
+}
+
+.addressBody h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.street {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+  margin-bottom: 0.1rem !important;
+}
+
+.city {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem !important;
+}
+
+.addressMeta {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.addressMeta span {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.distanceBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(196,18,48,0.2);
+  border: 1px solid rgba(196,18,48,0.4);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  flex-shrink: 0;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.distNum {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.distLabel {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.25rem;
+  white-space: nowrap;
+}
+
+/* ── Map wrapper ── */
+.mapWrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(196,18,48,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.map {
+  height: 420px;
+  width: 100%;
+  z-index: 0;
+}
+
+/* ── Locate button (overlaid) ── */
+.locateBtn {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  color: #1c0a0e;
+  border: none;
+  border-radius: 24px;
+  padding: 0.55rem 1.25rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.22);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.locateBtn:hover:not(:disabled) {
+  background: #f9f0f2;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.locateBtn:disabled {
+  cursor: default;
+}
+
+.locateDone {
+  background: #c41230;
+  color: #fff;
+}
+
+.locateDone:hover {
+  background: #c41230 !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-top-color: #c41230;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Status messages */
+.geoMsg {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(13,0,3,0.85);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.82rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0);   }
+}
+
+@media (max-width: 540px) {
+  .addressCard {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .distanceBadge {
+    align-self: flex-start;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .map {
+    height: 320px;
+  }
+}

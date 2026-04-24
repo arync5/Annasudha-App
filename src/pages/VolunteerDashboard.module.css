@@ -1,0 +1,398 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.sub { font-size: 0.88rem; color: var(--text-muted); }
+
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.85rem 1.5rem;
+}
+
+.statDivider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+}
+
+.statNum {
+  font-family: 'Merriweather', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 0.3rem;
+  white-space: nowrap;
+}
+
+/* ── Tab bar ── */
+.tabBar {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.75rem;
+}
+
+.tabBtn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.tabBtn:hover { color: #fff; }
+.tabBtnActive { color: #fff; border-bottom-color: var(--maroon-bright); }
+
+/* ── Panel ── */
+.panel {
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── Filter row ── */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.chip:hover { color: var(--maroon-bright); border-color: var(--border-bright); }
+.chipActive { background: var(--maroon-bright); color: #fff; border-color: var(--maroon-bright); }
+
+/* ── Shift grid (find shifts) ── */
+.shiftGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.empty { color: var(--text-muted); font-size: 0.9rem; padding: 1rem 0; }
+
+.shiftCard {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.shiftCard:hover { box-shadow: var(--shadow-md); border-color: var(--border-bright); }
+.shiftCardSigned { border-color: rgba(74,222,128,0.3); background: rgba(22,163,74,0.05); }
+
+.shiftTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.shiftIcon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+
+.shiftMeta { flex: 1; }
+.shiftProgram { display: block; font-weight: 700; font-size: 0.92rem; color: #fff; }
+.shiftDate { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+.signedBadge {
+  background: rgba(22,163,74,0.15);
+  border: 1px solid rgba(74,222,128,0.3);
+  color: #4ade80;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.shiftDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.btnSignUp {
+  background: var(--maroon-bright);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-top: auto;
+}
+.btnSignUp:hover { background: #c01130; box-shadow: 0 0 14px rgba(224,21,58,0.4); }
+
+.btnCancel {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  margin-top: auto;
+}
+.btnCancel:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
+
+/* ── My Shifts ── */
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+.emptyIcon { font-size: 3rem; margin-bottom: 1rem; }
+.emptyState h3 { color: #fff; margin-bottom: 0.4rem; font-size: 1.15rem; }
+.emptyState p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+.btnPrimary {
+  background: var(--maroon-bright);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btnPrimary:hover { background: #c01130; box-shadow: 0 0 14px rgba(224,21,58,0.4); }
+
+.shiftSection {}
+.shiftSectionTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.shiftList {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.shiftRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+.shiftRow:last-child { border-bottom: none; }
+.shiftRow:hover { background: rgba(255,255,255,0.02); }
+
+.shiftRowPast { opacity: 0.6; }
+
+.shiftRowIcon { font-size: 1.2rem; flex-shrink: 0; }
+.shiftRowInfo { flex: 1; min-width: 0; }
+.shiftRowName { display: block; font-weight: 600; font-size: 0.88rem; color: #fff; }
+.shiftRowSub { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shiftRowHours { font-size: 0.82rem; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+
+.btnCancelSm {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btnCancelSm:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
+
+.completedTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4ade80;
+  flex-shrink: 0;
+}
+
+.hoursSummary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.hoursSummary strong { color: #fff; font-size: 1rem; }
+
+/* ── Profile ── */
+.profileCard {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--maroon-bright);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profileName { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #fff; margin-bottom: 0.2rem; }
+.profileEmail { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.roleBadge {
+  display: inline-block;
+  background: rgba(196,18,48,0.15);
+  border: 1px solid rgba(196,18,48,0.4);
+  color: #f87171;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.profileStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.profileStat {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+
+.profileStatNum {
+  display: block;
+  font-family: 'Merriweather', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.profileStatLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.profileNote {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+}
+.profileNote p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 760px) {
+  .header { flex-direction: column; }
+  .statRow { width: 100%; }
+  .stat { flex: 1; }
+  .shiftGrid { grid-template-columns: 1fr; }
+  .profileStats { grid-template-columns: 1fr 1fr; }
+  .shiftRowSub { white-space: normal; }
+}
+
+@media (max-width: 480px) {
+  .profileStats { grid-template-columns: 1fr; }
+  .profileCard { flex-direction: column; text-align: center; }
+}

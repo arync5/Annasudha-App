@@ -1,0 +1,32 @@
+.tilt {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  will-change: transform;
+}
+
+/* Spotlight glow overlay */
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(196, 18, 48, 0.08) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tilt:hover::after {
+  opacity: 1;
+}
+
+.tilt:hover {
+  box-shadow: 0 12px 36px rgba(128, 0, 32, 0.2);
+}
