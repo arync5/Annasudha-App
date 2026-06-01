@@ -4,17 +4,17 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(180,10,40,0.1) 0%, transparent 70%);
+  background: linear-gradient(150deg, #fdf4f6 0%, #fef9fb 50%, #f9f4fd 100%);
 }
 
 .card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #f0dce2;
+  border-radius: 20px;
   padding: 2.5rem 2rem;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  box-shadow: 0 4px 32px rgba(180,60,90,0.08), 0 1px 4px rgba(180,60,90,0.05);
 }
 
 .logoRow {
@@ -25,24 +25,24 @@
   margin-bottom: 1.75rem;
 }
 
-.diamond { color: #c41230; font-size: 1.1rem; }
+.diamond { color: var(--maroon-bright); font-size: 1.1rem; }
 .logoText {
   font-family: 'Merriweather', serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
 }
 
 .title {
   font-family: 'Merriweather', serif;
-  font-size: 1.5rem;
-  color: #fff;
+  font-size: 1.45rem;
+  color: var(--text);
   text-align: center;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .sub {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
   text-align: center;
   margin-bottom: 1.5rem;
@@ -51,8 +51,8 @@
 /* ── Tabs ── */
 .tabs {
   display: flex;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid #f0dce2;
+  border-radius: 10px;
   overflow: hidden;
   margin-bottom: 1.5rem;
 }
@@ -69,12 +69,9 @@
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
-.tab:first-child { border-right: 1px solid var(--border); }
-.tab:hover { color: #fff; background: rgba(255,255,255,0.04); }
-.tabActive {
-  background: var(--maroon-bright);
-  color: #fff;
-}
+.tab:first-child { border-right: 1px solid #f0dce2; }
+.tab:hover { color: var(--text); background: rgba(201,75,106,0.04); }
+.tabActive { background: var(--maroon-bright); color: #fff; }
 .tabActive:hover { background: var(--maroon-bright); }
 
 /* ── Form ── */
@@ -91,11 +88,11 @@
 }
 
 .label {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
 }
 
 .hint {
@@ -109,26 +106,27 @@
 .input {
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
+  background: #fdf8f9;
+  border: 1.5px solid #f0dce2;
+  border-radius: 10px;
   padding: 0.65rem 0.9rem;
-  color: #fff;
+  color: var(--text);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .input::placeholder { color: var(--text-dim); }
 .input:focus {
   border-color: var(--maroon-bright);
-  box-shadow: 0 0 0 3px rgba(224,21,58,0.18);
+  box-shadow: 0 0 0 3px rgba(201,75,106,0.1);
+  background: #fff;
 }
 
 .error {
   font-size: 0.82rem;
-  color: #f87171;
-  background: rgba(220,38,38,0.1);
-  border: 1px solid rgba(220,38,38,0.3);
-  border-radius: 6px;
+  color: #b03050;
+  background: #fdf0f2;
+  border: 1px solid #f5c6cf;
+  border-radius: 8px;
   padding: 0.5rem 0.75rem;
   margin: 0 0 0.25rem;
 }
@@ -138,20 +136,20 @@
   background: var(--maroon-bright);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: var(--font-sans);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 .btn:hover:not(:disabled) {
-  background: #c01130;
-  box-shadow: 0 0 18px rgba(224,21,58,0.45);
+  background: var(--maroon);
+  box-shadow: 0 4px 18px rgba(201,75,106,0.3);
   transform: translateY(-1px);
 }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .switchHint {
   font-size: 0.82rem;
@@ -175,15 +173,15 @@
 .note {
   margin-top: 1.5rem;
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.25);
+  color: var(--text-dim);
   text-align: center;
   line-height: 1.6;
 }
 
 .noteLink {
-  color: rgba(255,255,255,0.45);
+  color: var(--text-muted);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color 0.2s;
 }
-.noteLink:hover { color: rgba(255,255,255,0.75); }
+.noteLink:hover { color: var(--maroon-bright); }

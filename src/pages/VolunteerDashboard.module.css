@@ -17,7 +17,7 @@
 .title {
   font-family: 'Merriweather', serif;
   font-size: 1.8rem;
-  color: #fff;
+  color: var(--text);
   margin-bottom: 0.25rem;
 }
 
@@ -26,12 +26,12 @@
 .statRow {
   display: flex;
   align-items: center;
-  gap: 0;
-  background: var(--bg-2);
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .stat {
@@ -43,20 +43,20 @@
 
 .statDivider {
   width: 1px;
-  height: 40px;
+  height: 36px;
   background: var(--border);
 }
 
 .statNum {
   font-family: 'Merriweather', serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--maroon);
   line-height: 1;
 }
 
 .statLabel {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -78,20 +78,18 @@
   border-bottom: 2px solid transparent;
   color: var(--text-muted);
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 0.6rem 1.1rem;
+  padding: 0.6rem 1rem;
   cursor: pointer;
   margin-bottom: -1px;
   transition: color 0.2s, border-color 0.2s;
 }
-.tabBtn:hover { color: #fff; }
-.tabBtnActive { color: #fff; border-bottom-color: var(--maroon-bright); }
+.tabBtn:hover { color: var(--text); }
+.tabBtnActive { color: var(--maroon-bright); border-bottom-color: var(--maroon-bright); }
 
 /* ── Panel ── */
-.panel {
-  animation: fadeIn 0.2s ease;
-}
+.panel { animation: fadeIn 0.2s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* ── Filter row ── */
@@ -103,16 +101,12 @@
   flex-wrap: wrap;
 }
 
-.filterLabel {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
+.filterLabel { font-size: 0.82rem; color: var(--text-muted); white-space: nowrap; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
 .chip {
-  background: rgba(255,255,255,0.04);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 20px;
   color: var(--text-muted);
@@ -126,7 +120,7 @@
 .chip:hover { color: var(--maroon-bright); border-color: var(--border-bright); }
 .chipActive { background: var(--maroon-bright); color: #fff; border-color: var(--maroon-bright); }
 
-/* ── Shift grid (find shifts) ── */
+/* ── Shift grid ── */
 .shiftGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -136,34 +130,29 @@
 .empty { color: var(--text-muted); font-size: 0.9rem; padding: 1rem 0; }
 
 .shiftCard {
-  background: var(--bg-2);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.1rem 1.15rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
 }
-.shiftCard:hover { box-shadow: var(--shadow-md); border-color: var(--border-bright); }
-.shiftCardSigned { border-color: rgba(74,222,128,0.3); background: rgba(22,163,74,0.05); }
+.shiftCard:hover { box-shadow: var(--shadow-md); border-color: var(--border-bright); transform: translateY(-2px); }
+.shiftCardSigned { border-color: rgba(22,163,74,0.3); background: rgba(22,163,74,0.03); }
 
-.shiftTop {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-}
-
+.shiftTop { display: flex; align-items: flex-start; gap: 0.6rem; }
 .shiftIcon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
-
 .shiftMeta { flex: 1; }
-.shiftProgram { display: block; font-weight: 700; font-size: 0.92rem; color: #fff; }
+.shiftProgram { display: block; font-weight: 700; font-size: 0.92rem; color: var(--text); }
 .shiftDate { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
 
 .signedBadge {
-  background: rgba(22,163,74,0.15);
-  border: 1px solid rgba(74,222,128,0.3);
-  color: #4ade80;
+  background: rgba(22,163,74,0.1);
+  border: 1px solid rgba(22,163,74,0.25);
+  color: #15803d;
   border-radius: 20px;
   font-size: 0.72rem;
   font-weight: 700;
@@ -193,10 +182,10 @@
   transition: background 0.2s, box-shadow 0.2s;
   margin-top: auto;
 }
-.btnSignUp:hover { background: #c01130; box-shadow: 0 0 14px rgba(224,21,58,0.4); }
+.btnSignUp:hover { background: var(--maroon); box-shadow: var(--shadow-sm); }
 
 .btnCancel {
-  background: rgba(255,255,255,0.05);
+  background: var(--bg-3);
   color: var(--text-muted);
   border: 1px solid var(--border);
   border-radius: 7px;
@@ -205,19 +194,15 @@
   font-weight: 600;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
   margin-top: auto;
 }
-.btnCancel:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
+.btnCancel:hover { color: #b03050; border-color: rgba(176,48,80,0.3); background: rgba(176,48,80,0.05); }
 
 /* ── My Shifts ── */
-.emptyState {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--text-muted);
-}
+.emptyState { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
 .emptyIcon { font-size: 3rem; margin-bottom: 1rem; }
-.emptyState h3 { color: #fff; margin-bottom: 0.4rem; font-size: 1.15rem; }
+.emptyState h3 { color: var(--text); margin-bottom: 0.4rem; font-size: 1.15rem; }
 .emptyState p { font-size: 0.9rem; margin-bottom: 1.5rem; }
 
 .btnPrimary {
@@ -232,11 +217,10 @@
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
 }
-.btnPrimary:hover { background: #c01130; box-shadow: 0 0 14px rgba(224,21,58,0.4); }
+.btnPrimary:hover { background: var(--maroon); box-shadow: var(--shadow-md); }
 
-.shiftSection {}
 .shiftSectionTitle {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -245,10 +229,11 @@
 }
 
 .shiftList {
-  background: var(--bg-2);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .shiftRow {
@@ -256,25 +241,25 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(180,60,90,0.06);
   transition: background 0.15s;
 }
 .shiftRow:last-child { border-bottom: none; }
-.shiftRow:hover { background: rgba(255,255,255,0.02); }
+.shiftRow:hover { background: var(--bg-3); }
 
-.shiftRowPast { opacity: 0.6; }
+.shiftRowPast { opacity: 0.55; }
 
 .shiftRowIcon { font-size: 1.2rem; flex-shrink: 0; }
 .shiftRowInfo { flex: 1; min-width: 0; }
-.shiftRowName { display: block; font-weight: 600; font-size: 0.88rem; color: #fff; }
-.shiftRowSub { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shiftRowName { display: block; font-weight: 600; font-size: 0.88rem; color: var(--text); }
+.shiftRowSub  { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .shiftRowHours { font-size: 0.82rem; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
 .btnCancelSm {
   background: none;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
   border-radius: 5px;
-  color: rgba(255,255,255,0.35);
+  color: var(--text-dim);
   font-size: 0.75rem;
   font-family: var(--font-sans);
   padding: 0.25rem 0.55rem;
@@ -282,12 +267,12 @@
   flex-shrink: 0;
   transition: color 0.2s, border-color 0.2s;
 }
-.btnCancelSm:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
+.btnCancelSm:hover { color: #b03050; border-color: rgba(176,48,80,0.3); }
 
 .completedTag {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #4ade80;
+  color: #15803d;
   flex-shrink: 0;
 }
 
@@ -300,25 +285,25 @@
   font-size: 0.85rem;
   color: var(--text-muted);
 }
-.hoursSummary strong { color: #fff; font-size: 1rem; }
+.hoursSummary strong { color: var(--text); font-size: 1rem; }
 
 /* ── Profile ── */
 .profileCard {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  background: var(--bg-2);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 60px; height: 60px;
   border-radius: 50%;
-  background: var(--maroon-bright);
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-bright));
   color: #fff;
   font-size: 1.5rem;
   font-weight: 700;
@@ -328,13 +313,13 @@
   flex-shrink: 0;
 }
 
-.profileName { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #fff; margin-bottom: 0.2rem; }
+.profileName  { font-family: 'Merriweather', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.2rem; }
 .profileEmail { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
 .roleBadge {
   display: inline-block;
-  background: rgba(196,18,48,0.15);
-  border: 1px solid rgba(196,18,48,0.4);
-  color: #f87171;
+  background: rgba(201,75,106,0.08);
+  border: 1px solid rgba(201,75,106,0.25);
+  color: var(--maroon-bright);
   border-radius: 20px;
   font-size: 0.72rem;
   font-weight: 700;
@@ -351,11 +336,12 @@
 }
 
 .profileStat {
-  background: var(--bg-2);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1rem 1.25rem;
   text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 
 .profileStatNum {
@@ -363,7 +349,7 @@
   font-family: 'Merriweather', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--maroon);
   margin-bottom: 0.2rem;
 }
 
@@ -375,7 +361,7 @@
 }
 
 .profileNote {
-  background: rgba(255,255,255,0.03);
+  background: var(--bg-3);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.9rem 1rem;
@@ -391,7 +377,6 @@
   .profileStats { grid-template-columns: 1fr 1fr; }
   .shiftRowSub { white-space: normal; }
 }
-
 @media (max-width: 480px) {
   .profileStats { grid-template-columns: 1fr; }
   .profileCard { flex-direction: column; text-align: center; }

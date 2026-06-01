@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Wheat, ChefHat, Heart, Utensils } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import TiltCard from '../components/TiltCard'
 import Counter from '../components/Counter'
@@ -11,9 +12,9 @@ const stats = [
 ]
 
 const steps = [
-  { icon: '🌾', title: 'Rescue',  text: 'We collect surplus and near-expiry food from restaurants, grocery stores, farms, and events before it goes to waste.' },
-  { icon: '🍳', title: 'Prepare', text: 'Our volunteer kitchens sort, pack, and when possible cook wholesome meals that are ready for same-day distribution.' },
-  { icon: '❤️', title: 'Deliver', text: 'We bring meals directly to shelters, community centers, and families — always with compassion and respect.' },
+  { Icon: Wheat,   title: 'Rescue',  text: 'We collect surplus and near-expiry food from restaurants, grocery stores, farms, and events before it goes to waste.' },
+  { Icon: ChefHat, title: 'Prepare', text: 'Our volunteer kitchens sort, pack, and when possible cook wholesome meals that are ready for same-day distribution.' },
+  { Icon: Heart,   title: 'Deliver', text: 'We bring meals directly to shelters, community centers, and families — always with compassion and respect.' },
 ]
 
 export default function Home() {
@@ -73,7 +74,7 @@ export default function Home() {
           </Reveal>
           <Reveal variant="clip-diag" delay="0.15s">
             <div className="image-placeholder">
-              <span>🍽️</span>
+              <Utensils size={56} />
               <p>Community Food Distribution</p>
             </div>
           </Reveal>
@@ -91,7 +92,7 @@ export default function Home() {
             {steps.map((s, i) => (
               <Reveal key={s.title} variant="flip-3d" delay={`${i * 0.14}s`}>
                 <TiltCard className="step-card">
-                  <div className="step-icon">{s.icon}</div>
+                  <div className="step-icon"><s.Icon size={36} /></div>
                   <h3>{s.title}</h3>
                   <p>{s.text}</p>
                 </TiltCard>

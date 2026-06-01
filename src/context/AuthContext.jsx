@@ -1,70 +1,104 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut as fbSignOut,
+} from 'firebase/auth'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 
 const AuthContext = createContext(null)
 
-// Admin credentials — change as needed
-const ADMIN_USERNAME = 'admin'
-const ADMIN_PASSWORD = 'annaseva2024'
-
-const SESSION_KEY   = 'annaseva_session'
-const VOLUNTEERS_KEY = 'annaseva_volunteers'
+function friendlyError(code) {
+  switch (code) {
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential':  return 'Invalid email or password.'
+    case 'auth/email-already-in-use': return 'An account with this email already exists.'
+    case 'auth/weak-password':        return 'Password must be at least 6 characters.'
+    case 'auth/invalid-email':        return 'Please enter a valid email address.'
+    case 'auth/too-many-requests':    return 'Too many attempts. Please try again later.'
+    default:                          return 'Something went wrong. Please try again.'
+  }
+}
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const s = sessionStorage.getItem(SESSION_KEY)
-      return s ? JSON.parse(s) : null
-    } catch { return null }
-  })
+  // user shape: { uid, name, email, role: 'admin'|'volunteer' } | null
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true) // true while Firebase initialises
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      if (fbUser) {
+        const snap = await getDoc(doc(db, 'users', fbUser.uid))
+        setUser(snap.exists() ? { uid: fbUser.uid, ...snap.data() } : null)
+      } else {
+        setUser(null)
+      }
+      setLoading(false)
+    })
+    return unsub
+  }, [])
 
   const isAdmin     = user?.role === 'admin'
   const isVolunteer = user?.role === 'volunteer'
 
-  // ── Admin ──────────────────────────────────────────────────────────────
-  const adminLogin = useCallback((username, password) => {
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      const u = { role: 'admin', name: 'Administrator' }
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(u))
-      setUser(u)
-      return { ok: true }
+  // ── Sign in (works for both roles) ────────────────────────────────────────
+  // Returns { ok: true, role } or { ok: false, error }
+  const signIn = useCallback(async (email, password) => {
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email.trim(), password)
+      const snap = await getDoc(doc(db, 'users', cred.user.uid))
+      if (!snap.exists()) {
+        await fbSignOut(auth)
+        return { ok: false, error: 'No profile found for this account. Contact an administrator.' }
+      }
+      return { ok: true, role: snap.data().role }
+    } catch (err) {
+      return { ok: false, error: friendlyError(err.code) }
     }
-    return { ok: false, error: 'Invalid username or password.' }
   }, [])
 
-  // ── Volunteer ──────────────────────────────────────────────────────────
-  const registerVolunteer = useCallback((name, email, password) => {
-    const volunteers = JSON.parse(localStorage.getItem(VOLUNTEERS_KEY) || '{}')
-    const key = email.trim().toLowerCase()
-    if (volunteers[key]) return { ok: false, error: 'An account with this email already exists.' }
-    volunteers[key] = { name: name.trim(), email: key, password }
-    localStorage.setItem(VOLUNTEERS_KEY, JSON.stringify(volunteers))
-    const u = { role: 'volunteer', name: name.trim(), email: key }
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(u))
-    setUser(u)
-    return { ok: true }
+  // ── Register a new volunteer ──────────────────────────────────────────────
+  const registerVolunteer = useCallback(async (name, email, password) => {
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email.trim(), password)
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        name:  name.trim(),
+        email: email.trim().toLowerCase(),
+        role:  'volunteer',
+      })
+      return { ok: true }
+    } catch (err) {
+      return { ok: false, error: friendlyError(err.code) }
+    }
   }, [])
 
-  const volunteerLogin = useCallback((email, password) => {
-    const volunteers = JSON.parse(localStorage.getItem(VOLUNTEERS_KEY) || '{}')
-    const key = email.trim().toLowerCase()
-    const acc = volunteers[key]
-    if (!acc || acc.password !== password) return { ok: false, error: 'Invalid email or password.' }
-    const u = { role: 'volunteer', name: acc.name, email: key }
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(u))
-    setUser(u)
-    return { ok: true }
+  // ── Register a new admin ──────────────────────────────────────────────────
+  const registerAdmin = useCallback(async (name, email, password) => {
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email.trim(), password)
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        name:  name.trim(),
+        email: email.trim().toLowerCase(),
+        role:  'admin',
+      })
+      return { ok: true }
+    } catch (err) {
+      return { ok: false, error: friendlyError(err.code) }
+    }
   }, [])
 
-  // ── Shared ─────────────────────────────────────────────────────────────
-  const logout = useCallback(() => {
-    sessionStorage.removeItem(SESSION_KEY)
-    setUser(null)
+  // ── Sign out ──────────────────────────────────────────────────────────────
+  const logout = useCallback(async () => {
+    await fbSignOut(auth)
   }, [])
 
   return (
     <AuthContext.Provider value={{
-      user, isAdmin, isVolunteer,
-      adminLogin, registerVolunteer, volunteerLogin, logout,
+      user, isAdmin, isVolunteer, loading,
+      signIn, registerVolunteer, registerAdmin, logout,
     }}>
       {children}
     </AuthContext.Provider>

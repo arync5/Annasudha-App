@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import { Handshake, Sprout, Building2, Wrench } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import TiltCard from '../components/TiltCard'
 
 const values = [
-  { icon: '🤝', title: 'Dignity',       text: 'Every person we serve is treated with respect and compassion — always, without exception.' },
-  { icon: '🌱', title: 'Sustainability', text: 'We rescue food that would otherwise go to waste, reducing environmental impact while feeding people.' },
-  { icon: '🏘️', title: 'Community',      text: 'The best solutions come from within communities. We listen first, then act alongside — never for — the people we serve.' },
+  { Icon: Handshake, title: 'Dignity',       text: 'Every person we serve is treated with respect and compassion — always, without exception.' },
+  { Icon: Sprout,    title: 'Sustainability', text: 'We rescue food that would otherwise go to waste, reducing environmental impact while feeding people.' },
+  { Icon: Building2, title: 'Community',      text: 'The best solutions come from within communities. We listen first, then act alongside — never for — the people we serve.' },
 ]
 
 const team = [
@@ -45,7 +46,7 @@ export default function About() {
           </Reveal>
           <Reveal variant="clip-diag" delay="0.15s">
             <div className="image-placeholder">
-              <span>🏗️</span>
+              <Wrench size={56} />
               <p>Our Founding Kitchen, 2015</p>
             </div>
           </Reveal>
@@ -63,7 +64,7 @@ export default function About() {
             {values.map((v, i) => (
               <Reveal key={v.title} variant="zoom-blur" delay={`${i * 0.14}s`}>
                 <TiltCard className="step-card">
-                  <div className="step-icon">{v.icon}</div>
+                  <div className="step-icon"><v.Icon size={36} /></div>
                   <h3>{v.title}</h3>
                   <p>{v.text}</p>
                 </TiltCard>

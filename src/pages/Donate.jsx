@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Heart, ShieldCheck } from 'lucide-react'
 import styles from './Volunteer.module.css'
 
 const PRESET_AMOUNTS = [
@@ -61,7 +62,7 @@ export default function Donate() {
           <div className="form-card">
             {donated ? (
               <div className="success-box">
-                <div className="check">💛</div>
+                <div className="check"><Heart size={40} /></div>
                 <h3>Thank you, {form.name}!</h3>
                 <p>
                   Your {frequency === 'monthly' ? 'monthly ' : ''}gift of{' '}
@@ -152,7 +153,7 @@ export default function Donate() {
                 </div>
 
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '1rem', marginBottom: '1.5rem' }}>
-                  🔒 This is a demo form — no real payment is processed. Anna Seva is a 501(c)(3) non-profit; donations may be tax-deductible.
+                  <ShieldCheck size={14} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />This is a demo form — no real payment is processed. Anna Seva is a 501(c)(3) non-profit; donations may be tax-deductible.
                 </p>
 
                 <div className="form-submit">

@@ -1,5 +1,5 @@
 .sectionLabel {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -7,31 +7,29 @@
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.5rem;
   margin-bottom: 1.25rem;
-  text-shadow: 0 0 10px rgba(224,21,58,0.3);
 }
 
 .error {
   font-size: 0.8rem;
-  color: #f87171;
+  color: #b03050;
   margin-top: 0.2rem;
 }
 
 .hint {
   font-weight: 400;
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: var(--text-dim);
 }
 
-/* ── Where to go section ── */
 .whereSection {
-  border-top: 1px solid rgba(128,0,32,0.15);
+  border-top: 1px solid var(--border);
   padding-top: 1.75rem;
 }
 
 .whereTitle {
   font-family: 'Merriweather', serif;
   font-size: 1.15rem;
-  color: #fff;
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 0.5rem;

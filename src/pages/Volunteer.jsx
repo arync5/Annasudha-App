@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { Handshake, Sprout, Users, CheckCircle, MapPin } from 'lucide-react'
+import { db } from '../firebase'
 import styles from './Volunteer.module.css'
 import VolunteerMap, { ORG } from '../components/VolunteerMap'
 
@@ -60,10 +63,21 @@ export default function Volunteer() {
     return e
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
+
+    // Save to Firestore — errors are silent so the user still sees confirmation
+    try {
+      await addDoc(collection(db, 'applications'), {
+        ...form,
+        status:       'pending',
+        adminComment: '',
+        submittedAt:  serverTimestamp(),
+      })
+    } catch (_) {}
+
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -82,12 +96,12 @@ export default function Volunteer() {
           <h2 className="center">Your Time Changes Lives</h2>
           <div className="steps-grid">
             {[
-              { icon: '🤝', title: 'Real Impact',      text: 'Every shift you volunteer directly translates to meals on the table for families in your own community.' },
-              { icon: '🌱', title: 'Grow & Learn',     text: 'Gain hands-on experience in food service, logistics, community organizing, and more.' },
-              { icon: '👨‍👩‍👧‍👦', title: 'Find Your People', text: 'Join a warm, passionate community of people who show up for others — and for each other.' },
+              { Icon: Handshake, title: 'Real Impact',      text: 'Every shift you volunteer directly translates to meals on the table for families in your own community.' },
+              { Icon: Sprout,    title: 'Grow & Learn',     text: 'Gain hands-on experience in food service, logistics, community organizing, and more.' },
+              { Icon: Users,     title: 'Find Your People', text: 'Join a warm, passionate community of people who show up for others — and for each other.' },
             ].map(v => (
               <div key={v.title} className="step-card">
-                <div className="step-icon">{v.icon}</div>
+                <div className="step-icon"><v.Icon size={36} /></div>
                 <h3>{v.title}</h3>
                 <p>{v.text}</p>
               </div>
@@ -107,7 +121,7 @@ export default function Volunteer() {
               <div>
                 {/* Confirmation header */}
                 <div className="success-box" style={{ marginBottom: '2rem' }}>
-                  <div className="check">✅</div>
+                  <div className="check"><CheckCircle size={40} /></div>
                   <h3>You're signed up!</h3>
                   <p>
                     Thank you, <strong>{form.firstName}</strong>! We've received your registration
@@ -118,8 +132,8 @@ export default function Volunteer() {
 
                 {/* Where to go section */}
                 <div className={styles.whereSection}>
-                  <h3 className={styles.whereTitle}>
-                    <span>📍</span> Where to show up
+                  <h3 className={styles.whereTitle} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <MapPin size={20} /> Where to show up
                   </h3>
                   <p className={styles.whereDesc}>
                     Here's where your first shift will be. Hit <strong>"Show my location"</strong> on

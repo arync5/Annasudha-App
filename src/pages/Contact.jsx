@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import styles from './Volunteer.module.css'
 
 export default function Contact() {
@@ -40,13 +41,13 @@ export default function Contact() {
 
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {[
-                { icon: '📧', label: 'Email', value: 'annasudhava@gmail.com' },
-                { icon: '📞', label: 'Phone', value: '703-945-9313' },
-                { icon: '📍', label: 'Address', value: '21100 Dulles Town Center, Ste 190\nDulles, VA 20166' },
-                { icon: '🕐', label: 'Kitchen Hours', value: 'Monday to Sunday – 9 AM to 5 PM' },
+                { Icon: Mail,   label: 'Email', value: 'annasudhava@gmail.com' },
+                { Icon: Phone,  label: 'Phone', value: '703-945-9313' },
+                { Icon: MapPin, label: 'Address', value: '21100 Dulles Town Center, Ste 190\nDulles, VA 20166' },
+                { Icon: Clock,  label: 'Kitchen Hours', value: 'Monday to Sunday – 9 AM to 5 PM' },
               ].map(item => (
                 <div key={item.label} style={{ display: 'flex', gap: '1rem' }}>
-                  <span style={{ fontSize: '1.4rem', minWidth: '2rem' }}>{item.icon}</span>
+                  <span style={{ minWidth: '2rem', paddingTop: '0.1rem', color: 'var(--maroon-bright)', flexShrink: 0 }}><item.Icon size={20} /></span>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--maroon-bright)', marginBottom: '0.2rem' }}>{item.label}</div>
                     <div style={{ color: 'var(--text-muted)', whiteSpace: 'pre-line' }}>{item.value}</div>
@@ -60,7 +61,7 @@ export default function Contact() {
           <div className="form-card" style={{ flex: 1 }}>
             {sent ? (
               <div className="success-box">
-                <div className="check">✉️</div>
+                <div className="check"><Mail size={40} /></div>
                 <h3>Message sent!</h3>
                 <p>Thanks for reaching out. We'll get back to you at <strong>{form.email}</strong> within 1–2 business days.</p>
                 <br />

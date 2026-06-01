@@ -7,14 +7,13 @@
   will-change: transform;
 }
 
-/* Spotlight glow overlay */
 .tilt::after {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(
     circle at var(--glow-x, 50%) var(--glow-y, 50%),
-    rgba(196, 18, 48, 0.08) 0%,
+    rgba(201,75,106,0.06) 0%,
     transparent 65%
   );
   opacity: 0;
@@ -23,10 +22,5 @@
   border-radius: inherit;
 }
 
-.tilt:hover::after {
-  opacity: 1;
-}
-
-.tilt:hover {
-  box-shadow: 0 12px 36px rgba(128, 0, 32, 0.2);
-}
+.tilt:hover::after { opacity: 1; }
+.tilt:hover { box-shadow: 0 12px 36px rgba(180,60,90,0.12); }

@@ -1,5 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
+import {
+  Wheat, Fish, Apple, Carrot, Leaf, Droplets, Package, Utensils, Banana,
+  AlertCircle, AlertTriangle, TrendingUp, CheckCircle, Bell, RefreshCw,
+  Check, X, Pencil,
+} from 'lucide-react'
 import styles from './Inventory.module.css'
+
+// ── Icon map for inventory items (keyed by emoji for localStorage compat) ──
+const ICON_MAP = {
+  '🌾': Wheat, '🥣': Wheat, '🍝': Utensils, '🥫': Package, '🫘': Package,
+  '🐟': Fish,  '🥜': Package, '🍎': Apple, '🍌': Banana, '🥕': Carrot,
+  '🥬': Leaf,  '🥛': Droplets, '🥚': Package, '🧀': Package, '🫙': Droplets,
+  '🧂': Package, '🍅': Apple,
+}
 
 // ── Sample seed data ────────────────────────────────────────────────
 const SEED = [
@@ -55,7 +68,7 @@ function buildSuggestions(items) {
   critical.forEach(i => {
     suggestions.push({
       severity: 'critical',
-      icon: '🚨',
+      Icon: AlertCircle,
       title: `Emergency restock: ${i.name}`,
       body: `Only ${i.qty} ${i.unit} remaining — ${Math.round((i.qty / i.min) * 100)}% of minimum. Contact donor network immediately and pause distributions involving ${i.name} until restocked.`,
     })
@@ -65,7 +78,7 @@ function buildSuggestions(items) {
     const surplus = i.qty - i.max
     suggestions.push({
       severity: 'oversupply',
-      icon: '📦',
+      Icon: Package,
       title: `Redistribute surplus: ${i.name}`,
       body: `${surplus} ${i.unit} above maximum threshold. Schedule an extra distribution event, reach out to partner shelters, and feature ${i.name} prominently in this week's community kitchen menu.`,
     })
@@ -74,7 +87,7 @@ function buildSuggestions(items) {
   low.forEach(i => {
     suggestions.push({
       severity: 'low',
-      icon: '⚠️',
+      Icon: AlertTriangle,
       title: `Restock soon: ${i.name}`,
       body: `${i.qty} ${i.unit} remaining — approaching minimum. Alert volunteers to prioritize ${i.name} pickup from donor partners on the next food rescue run.`,
     })
@@ -85,7 +98,7 @@ function buildSuggestions(items) {
     const needItems  = [...critical, ...low].map(i => i.name).slice(0, 3).join(', ')
     suggestions.push({
       severity: 'info',
-      icon: '🔄',
+      Icon: RefreshCw,
       title: 'Rebalance distribution routes',
       body: `You have surplus in ${haveItems} and shortages in ${needItems}. Consider adjusting this week's distribution routes so overstocked items offset shortage items across locations.`,
     })
@@ -94,7 +107,7 @@ function buildSuggestions(items) {
   if (suggestions.length === 0) {
     suggestions.push({
       severity: 'normal',
-      icon: '✅',
+      Icon: CheckCircle,
       title: 'Inventory looks healthy',
       body: 'All items are within normal thresholds. Keep up the great work — continue regular food rescue pickups to maintain stock levels.',
     })
@@ -223,28 +236,28 @@ export default function Inventory() {
       {/* ── Summary cards ── */}
       <div className={styles.summaryGrid}>
         <div className={styles.summaryCard}>
-          <span className={styles.summaryIcon}>📦</span>
+          <span className={styles.summaryIcon}><Package size={24} /></span>
           <div>
             <div className={styles.summaryNum}>{items.length}</div>
             <div className={styles.summaryLabel}>Total Items</div>
           </div>
         </div>
         <div className={`${styles.summaryCard} ${alertCount > 0 ? styles.summaryDanger : ''}`}>
-          <span className={styles.summaryIcon}>🚨</span>
+          <span className={styles.summaryIcon}><AlertCircle size={24} /></span>
           <div>
             <div className={styles.summaryNum}>{alertCount}</div>
             <div className={styles.summaryLabel}>Shortage Alerts</div>
           </div>
         </div>
         <div className={`${styles.summaryCard} ${surplusCount > 0 ? styles.summaryWarning : ''}`}>
-          <span className={styles.summaryIcon}>📈</span>
+          <span className={styles.summaryIcon}><TrendingUp size={24} /></span>
           <div>
             <div className={styles.summaryNum}>{surplusCount}</div>
             <div className={styles.summaryLabel}>Oversupply Items</div>
           </div>
         </div>
         <div className={styles.summaryCard}>
-          <span className={styles.summaryIcon}>✅</span>
+          <span className={styles.summaryIcon}><CheckCircle size={24} /></span>
           <div>
             <div className={styles.summaryNum}>
               {withStatus.filter(i => i.status === 'normal').length}
@@ -310,15 +323,16 @@ export default function Inventory() {
                   <tr><td colSpan={6} className={styles.emptyRow}>No items match your filters.</td></tr>
                 )}
                 {filtered.map(item => {
-                  const meta = STATUS_META[item.status]
-                  const bar  = pct(item.qty, item.min, item.max)
-                  const isEditing = editId === item.id
+                  const meta     = STATUS_META[item.status]
+                  const bar      = pct(item.qty, item.min, item.max)
+                  const isEditing  = editId === item.id
                   const isFlashing = flash === item.id
+                  const ItemIcon   = ICON_MAP[item.icon] || Package
 
                   return (
                     <tr key={item.id} className={`${styles.row} ${isFlashing ? styles.rowFlash : ''}`}>
                       <td className={styles.nameCell}>
-                        <span className={styles.itemIcon}>{item.icon}</span>
+                        <span className={styles.itemIcon}><ItemIcon size={18} /></span>
                         <span>{item.name}</span>
                       </td>
                       <td><span className={styles.catBadge}>{item.category}</span></td>
@@ -338,8 +352,8 @@ export default function Inventory() {
                               }}
                             />
                             <span className={styles.unit}>{item.unit}</span>
-                            <button className={styles.editSave} onClick={() => commitEdit(item.id)}>✓</button>
-                            <button className={styles.editCancel} onClick={() => setEditId(null)}>✕</button>
+                            <button className={styles.editSave} onClick={() => commitEdit(item.id)}><Check size={13} /></button>
+                            <button className={styles.editCancel} onClick={() => setEditId(null)}><X size={13} /></button>
                           </div>
                         ) : (
                           <span
@@ -385,7 +399,7 @@ export default function Inventory() {
                           onClick={() => { setEditId(item.id); setEditQty(String(item.qty)) }}
                           title="Set exact quantity"
                         >
-                          ✎
+                          <Pencil size={13} />
                         </button>
                       </td>
                     </tr>
@@ -402,7 +416,7 @@ export default function Inventory() {
           {/* Alert summary */}
           {(alertCount > 0 || surplusCount > 0) && (
             <div className={styles.alertBanner}>
-              <span className={styles.alertBannerIcon}>🔔</span>
+              <span className={styles.alertBannerIcon}><Bell size={20} /></span>
               <div>
                 <strong>{alertCount + surplusCount} item{alertCount + surplusCount !== 1 ? 's' : ''} need attention</strong>
                 <p>
@@ -418,7 +432,7 @@ export default function Inventory() {
           <div className={styles.sectionHead}>Active Alerts</div>
           <div className={styles.alertList}>
             {withStatus.filter(i => i.status !== 'normal').length === 0 ? (
-              <div className={styles.noAlerts}>✅ No active alerts — all items in range</div>
+              <div className={styles.noAlerts} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><CheckCircle size={16} /> No active alerts — all items in range</div>
             ) : (
               withStatus
                 .filter(i => i.status !== 'normal')
@@ -435,7 +449,7 @@ export default function Inventory() {
                       style={{ borderLeft: `3px solid ${meta.color}` }}
                     >
                       <div className={styles.alertItemTop}>
-                        <span className={styles.alertItemIcon}>{item.icon}</span>
+                        <span className={styles.alertItemIcon}>{(() => { const I = ICON_MAP[item.icon] || Package; return <I size={16} /> })()}</span>
                         <span className={styles.alertItemName}>{item.name}</span>
                         <span
                           className={styles.statusBadge}
@@ -476,8 +490,8 @@ export default function Inventory() {
                   className={styles.suggestion}
                   style={{ borderLeft: `3px solid ${colors.border}`, background: colors.bg }}
                 >
-                  <div className={styles.suggestionTitle}>
-                    <span>{s.icon}</span> {s.title}
+                  <div className={styles.suggestionTitle} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <s.Icon size={15} /> {s.title}
                   </div>
                   <p className={styles.suggestionBody}>{s.body}</p>
                 </div>

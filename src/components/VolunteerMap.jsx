@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { MapPin, Clock, Car, Check } from 'lucide-react'
 import styles from './VolunteerMap.module.css'
 
 // Fix Leaflet's broken default icon paths in bundlers
@@ -113,14 +114,14 @@ export default function VolunteerMap() {
 
       {/* ── Address card ── */}
       <div className={styles.addressCard}>
-        <div className={styles.addressIcon}>📍</div>
+        <div className={styles.addressIcon}><MapPin size={24} /></div>
         <div className={styles.addressBody}>
           <h3>{ORG.name}</h3>
           <p className={styles.street}>{ORG.street}</p>
           <p className={styles.city}>{ORG.city}</p>
           <div className={styles.addressMeta}>
-            <span>🕐 {ORG.hours}</span>
-            <span>🅿️ {ORG.parking}</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Clock size={14} /> {ORG.hours}</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Car size={14} /> {ORG.parking}</span>
           </div>
         </div>
         {distance && duration && (
@@ -156,7 +157,7 @@ export default function VolunteerMap() {
           {/* User marker */}
           {userLatLng && (
             <Marker position={userLatLng} icon={userIcon}>
-              <Popup>📍 You are here</Popup>
+              <Popup>You are here</Popup>
             </Marker>
           )}
 
@@ -182,7 +183,7 @@ export default function VolunteerMap() {
           {geoState === 'loading' ? (
             <span className={styles.spinner} />
           ) : geoState === 'ok' ? (
-            '✓ Located'
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Check size={14} /> Located</span>
           ) : (
             <>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

@@ -2,10 +2,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #800020, #c41230, #ff6680);
+  height: 2px;
+  background: linear-gradient(90deg, var(--maroon), var(--maroon-bright), #e8889e);
   z-index: 9999;
   transition: width 0.08s linear;
   pointer-events: none;
-  box-shadow: 0 0 8px rgba(196,18,48,0.6);
+  box-shadow: 0 0 6px rgba(201,75,106,0.4);
 }

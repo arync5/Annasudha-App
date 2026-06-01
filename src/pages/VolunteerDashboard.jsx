@@ -1,21 +1,22 @@
 import { useState, useMemo } from 'react'
+import { Utensils, Truck, Leaf, Home, BookOpen, Zap, Calendar, ClipboardList, User, Clock, MapPin, Timer, Check } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import styles from './VolunteerDashboard.module.css'
 
 // ── Upcoming shifts catalogue ─────────────────────────────────────────────────
 const ALL_SHIFTS = [
-  { id: 1,  program: 'Community Kitchen',    icon: '🍽️', date: '2026-05-02', day: 'Saturday',  time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
-  { id: 2,  program: 'Community Kitchen',    icon: '🍽️', date: '2026-05-03', day: 'Sunday',    time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
-  { id: 3,  program: 'Food Rescue',          icon: '🚚', date: '2026-05-05', day: 'Monday',    time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
-  { id: 4,  program: 'School Nutrition',     icon: '🌿', date: '2026-05-08', day: 'Friday',    time: '7am – 9am',   location: 'Lincoln Elementary, Milpitas',  hours: 2 },
-  { id: 5,  program: 'Community Kitchen',    icon: '🍽️', date: '2026-05-09', day: 'Saturday',  time: '10am – 2pm',  location: 'Eastside Center, San Jose',     hours: 4 },
-  { id: 6,  program: 'Food Rescue',          icon: '🚚', date: '2026-05-12', day: 'Tuesday',   time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
-  { id: 7,  program: 'Family Pantry',        icon: '🏠', date: '2026-05-17', day: 'Saturday',  time: '9am – 1pm',   location: 'Community Center, Milpitas',    hours: 4 },
-  { id: 8,  program: 'Nutrition Education',  icon: '📚', date: '2026-05-19', day: 'Tuesday',   time: '6pm – 8:30pm',location: 'Library Hall, Sunnyvale',       hours: 2.5 },
-  { id: 9,  program: 'Community Kitchen',    icon: '🍽️', date: '2026-05-23', day: 'Saturday',  time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
-  { id: 10, program: 'Crisis Response Drill',icon: '⚡', date: '2026-05-28', day: 'Thursday',  time: '9am – 12pm',  location: 'HQ, San Jose',                  hours: 3 },
-  { id: 11, program: 'Food Rescue',          icon: '🚚', date: '2026-06-02', day: 'Tuesday',   time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
-  { id: 12, program: 'Family Pantry',        icon: '🏠', date: '2026-06-07', day: 'Saturday',  time: '9am – 1pm',   location: 'Community Center, Milpitas',    hours: 4 },
+  { id: 1,  program: 'Community Kitchen',    Icon: Utensils, date: '2026-05-02', day: 'Saturday',  time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
+  { id: 2,  program: 'Community Kitchen',    Icon: Utensils, date: '2026-05-03', day: 'Sunday',    time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
+  { id: 3,  program: 'Food Rescue',          Icon: Truck,    date: '2026-05-05', day: 'Monday',    time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
+  { id: 4,  program: 'School Nutrition',     Icon: Leaf,     date: '2026-05-08', day: 'Friday',    time: '7am – 9am',   location: 'Lincoln Elementary, Milpitas',  hours: 2 },
+  { id: 5,  program: 'Community Kitchen',    Icon: Utensils, date: '2026-05-09', day: 'Saturday',  time: '10am – 2pm',  location: 'Eastside Center, San Jose',     hours: 4 },
+  { id: 6,  program: 'Food Rescue',          Icon: Truck,    date: '2026-05-12', day: 'Tuesday',   time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
+  { id: 7,  program: 'Family Pantry',        Icon: Home,     date: '2026-05-17', day: 'Saturday',  time: '9am – 1pm',   location: 'Community Center, Milpitas',    hours: 4 },
+  { id: 8,  program: 'Nutrition Education',  Icon: BookOpen, date: '2026-05-19', day: 'Tuesday',   time: '6pm – 8:30pm',location: 'Library Hall, Sunnyvale',       hours: 2.5 },
+  { id: 9,  program: 'Community Kitchen',    Icon: Utensils, date: '2026-05-23', day: 'Saturday',  time: '10am – 2pm',  location: 'Main Kitchen, San Jose',        hours: 4 },
+  { id: 10, program: 'Crisis Response Drill',Icon: Zap,      date: '2026-05-28', day: 'Thursday',  time: '9am – 12pm',  location: 'HQ, San Jose',                  hours: 3 },
+  { id: 11, program: 'Food Rescue',          Icon: Truck,    date: '2026-06-02', day: 'Tuesday',   time: '8am – 11am',  location: 'Various pickup sites',          hours: 3 },
+  { id: 12, program: 'Family Pantry',        Icon: Home,     date: '2026-06-07', day: 'Saturday',  time: '9am – 1pm',   location: 'Community Center, Milpitas',    hours: 4 },
 ]
 
 const SIGNUPS_KEY = 'annaseva_volunteer_signups'
@@ -104,16 +105,17 @@ export default function VolunteerDashboard() {
       {/* ── Tab bar ── */}
       <div className={styles.tabBar}>
         {[
-          { key: 'upcoming',  label: '📅 Find Shifts' },
-          { key: 'my-shifts', label: `🙋 My Shifts ${myUpcoming.length ? `(${myUpcoming.length})` : ''}` },
-          { key: 'profile',   label: '👤 Profile' },
+          { key: 'upcoming',  label: 'Find Shifts',                                                          Icon: Calendar      },
+          { key: 'my-shifts', label: `My Shifts${myUpcoming.length ? ` (${myUpcoming.length})` : ''}`,       Icon: ClipboardList },
+          { key: 'profile',   label: 'Profile',                                                               Icon: User          },
         ].map(t => (
           <button
             key={t.key}
             className={`${styles.tabBtn} ${activeTab === t.key ? styles.tabBtnActive : ''}`}
             onClick={() => setActiveTab(t.key)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            {t.label}
+            <t.Icon size={15} /> {t.label}
           </button>
         ))}
       </div>
@@ -145,17 +147,17 @@ export default function VolunteerDashboard() {
               return (
                 <div key={shift.id} className={`${styles.shiftCard} ${signed ? styles.shiftCardSigned : ''}`}>
                   <div className={styles.shiftTop}>
-                    <span className={styles.shiftIcon}>{shift.icon}</span>
+                    <span className={styles.shiftIcon}><shift.Icon size={20} /></span>
                     <div className={styles.shiftMeta}>
                       <span className={styles.shiftProgram}>{shift.program}</span>
                       <span className={styles.shiftDate}>{shift.day}, {formatDate(shift.date)}</span>
                     </div>
-                    {signed && <span className={styles.signedBadge}>Signed Up ✓</span>}
+                    {signed && <span className={styles.signedBadge} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>Signed Up <Check size={13} /></span>}
                   </div>
                   <div className={styles.shiftDetails}>
-                    <span>🕐 {shift.time}</span>
-                    <span>📍 {shift.location}</span>
-                    <span>⏱ {shift.hours}h</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Clock size={13} /> {shift.time}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><MapPin size={13} /> {shift.location}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Timer size={13} /> {shift.hours}h</span>
                   </div>
                   <button
                     className={signed ? styles.btnCancel : styles.btnSignUp}
@@ -175,7 +177,7 @@ export default function VolunteerDashboard() {
         <div className={styles.panel}>
           {myShifts.length === 0 ? (
             <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>📅</div>
+              <div className={styles.emptyIcon}><Calendar size={48} /></div>
               <h3>No shifts yet</h3>
               <p>Head over to "Find Shifts" to sign up for your first shift!</p>
               <button className={styles.btnPrimary} onClick={() => setActiveTab('upcoming')}>
@@ -190,7 +192,7 @@ export default function VolunteerDashboard() {
                   <div className={styles.shiftList}>
                     {myUpcoming.map(shift => (
                       <div key={shift.id} className={styles.shiftRow}>
-                        <span className={styles.shiftRowIcon}>{shift.icon}</span>
+                        <span className={styles.shiftRowIcon}><shift.Icon size={18} /></span>
                         <div className={styles.shiftRowInfo}>
                           <span className={styles.shiftRowName}>{shift.program}</span>
                           <span className={styles.shiftRowSub}>{shift.day}, {formatDate(shift.date)} · {shift.time} · {shift.location}</span>
@@ -209,13 +211,13 @@ export default function VolunteerDashboard() {
                   <div className={styles.shiftList}>
                     {myPast.map(shift => (
                       <div key={shift.id} className={`${styles.shiftRow} ${styles.shiftRowPast}`}>
-                        <span className={styles.shiftRowIcon}>{shift.icon}</span>
+                        <span className={styles.shiftRowIcon}><shift.Icon size={18} /></span>
                         <div className={styles.shiftRowInfo}>
                           <span className={styles.shiftRowName}>{shift.program}</span>
                           <span className={styles.shiftRowSub}>{shift.day}, {formatDate(shift.date)} · {shift.time}</span>
                         </div>
                         <span className={styles.shiftRowHours}>{shift.hours}h</span>
-                        <span className={styles.completedTag}>✓ Done</span>
+                        <span className={styles.completedTag} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Check size={13} /> Done</span>
                       </div>
                     ))}
                   </div>

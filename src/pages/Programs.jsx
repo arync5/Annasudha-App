@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Utensils, Truck, Home, Leaf, BookOpen, Zap } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import TiltCard from '../components/TiltCard'
 
@@ -7,37 +8,37 @@ const CARD_VARIANTS = ['flip-3d', 'clip-diag', 'zoom-blur', 'split', 'glitch', '
 
 const programs = [
   {
-    icon: '🍽️',
+    Icon: Utensils,
     title: 'Community Kitchen',
     desc: 'Our flagship program runs weekend community kitchens where volunteers cook and serve hot meals to anyone who walks through our doors — no questions asked.',
     details: ['Every Saturday & Sunday, 11am – 2pm', 'Locations in 8 cities', '400+ meals served each weekend'],
   },
   {
-    icon: '🚚',
+    Icon: Truck,
     title: 'Food Rescue',
     desc: 'We partner with restaurants, caterers, and grocery stores to collect surplus food before it goes to waste and redistribute it to families in need the same day.',
     details: ['Daily pickups, 7 days a week', '80+ food donor partners', '10,000 lbs of food rescued monthly'],
   },
   {
-    icon: '🏠',
+    Icon: Home,
     title: 'Family Pantry',
     desc: 'Registered families can visit our pantry twice a month to pick up grocery staples, fresh produce, and personal care items — with dignity and privacy.',
     details: ['Open every 1st & 3rd Saturday', '250+ registered families', 'Culturally diverse food options'],
   },
   {
-    icon: '🌿',
+    Icon: Leaf,
     title: 'School Nutrition',
     desc: "Partnering with Title I schools to provide breakfast snack bags and weekend meal kits so children don't go hungry when school lunch is unavailable.",
     details: ['12 partner schools', '600+ children supported', 'Active during the school year'],
   },
   {
-    icon: '📚',
+    Icon: BookOpen,
     title: 'Nutrition Education',
     desc: 'Monthly workshops teaching budget-friendly cooking, nutrition basics, and food safety — empowering communities with lasting skills beyond the meal.',
     details: ['Free and open to the public', 'Bilingual sessions available', 'Recipe kits provided'],
   },
   {
-    icon: '⚡',
+    Icon: Zap,
     title: 'Crisis Response',
     desc: 'When disasters or emergencies strike, Anna Seva deploys rapid-response food teams within 24 hours to affected communities, no matter what.',
     details: ['On-call volunteer teams', 'Emergency food stockpile maintained', 'Coordinated with local agencies'],
@@ -67,7 +68,7 @@ export default function Programs() {
                 delay={`${(i % 3) * 0.1}s`}
               >
                 <TiltCard className="program-card">
-                  <div className="program-icon">{p.icon}</div>
+                  <div className="program-icon"><p.Icon size={40} /></div>
                   <h3>{p.title}</h3>
                   <p>{p.desc}</p>
                   <ul className="program-details">

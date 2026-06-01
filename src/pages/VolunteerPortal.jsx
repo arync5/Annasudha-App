@@ -4,12 +4,12 @@ import { useAuth } from '../context/AuthContext'
 import styles from './VolunteerPortal.module.css'
 
 export default function VolunteerPortal() {
-  const { volunteerLogin, registerVolunteer } = useAuth()
+  const { signIn, registerVolunteer } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/portal'
 
-  const [tab, setTab] = useState('signin') // 'signin' | 'register'
+  const [tab, setTab] = useState('signin')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -23,38 +23,40 @@ export default function VolunteerPortal() {
   const [regPassword, setRegPassword] = useState('')
   const [regConfirm, setRegConfirm] = useState('')
 
-  function handleSignIn(e) {
+  async function handleSignIn(e) {
     e.preventDefault()
     setError('')
     setLoading(true)
-    setTimeout(() => {
-      const result = volunteerLogin(siEmail, siPassword)
-      if (result.ok) {
-        navigate(from, { replace: true })
-      } else {
-        setError(result.error)
-        setLoading(false)
-      }
-    }, 400)
+
+    const result = await signIn(siEmail, siPassword)
+
+    if (!result.ok) {
+      setError(result.error)
+      setLoading(false)
+      return
+    }
+
+    navigate(from, { replace: true })
   }
 
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault()
     setError('')
-    if (!regName.trim()) return setError('Please enter your name.')
-    if (!/\S+@\S+\.\S+/.test(regEmail)) return setError('Please enter a valid email.')
-    if (regPassword.length < 6) return setError('Password must be at least 6 characters.')
-    if (regPassword !== regConfirm) return setError('Passwords do not match.')
+    if (!regName.trim())                     return setError('Please enter your name.')
+    if (!/\S+@\S+\.\S+/.test(regEmail))      return setError('Please enter a valid email.')
+    if (regPassword.length < 6)              return setError('Password must be at least 6 characters.')
+    if (regPassword !== regConfirm)          return setError('Passwords do not match.')
+
     setLoading(true)
-    setTimeout(() => {
-      const result = registerVolunteer(regName, regEmail, regPassword)
-      if (result.ok) {
-        navigate('/portal', { replace: true })
-      } else {
-        setError(result.error)
-        setLoading(false)
-      }
-    }, 400)
+    const result = await registerVolunteer(regName, regEmail, regPassword)
+
+    if (!result.ok) {
+      setError(result.error)
+      setLoading(false)
+      return
+    }
+
+    navigate('/portal', { replace: true })
   }
 
   function switchTab(t) {
@@ -162,7 +164,9 @@ export default function VolunteerPortal() {
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.label} htmlFor="reg-password">Password <span className={styles.hint}>(min. 6 characters)</span></label>
+              <label className={styles.label} htmlFor="reg-password">
+                Password <span className={styles.hint}>(min. 6 characters)</span>
+              </label>
               <input
                 id="reg-password"
                 className={styles.input}

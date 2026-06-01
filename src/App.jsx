@@ -13,6 +13,8 @@ import Contact from './pages/Contact'
 import Donate from './pages/Donate'
 import Inventory from './pages/Inventory'
 import Login from './pages/Login'
+import AdminSignUp from './pages/AdminSignUp'
+import AdminVolunteers from './pages/AdminVolunteers'
 import VolunteerPortal from './pages/VolunteerPortal'
 import VolunteerDashboard from './pages/VolunteerDashboard'
 
@@ -36,6 +38,7 @@ export default function App() {
 
             {/* Auth portals */}
             <Route path="/admin/login"  element={<Login />} />
+            <Route path="/admin/signup" element={<AdminSignUp />} />
             <Route path="/portal/login" element={<VolunteerPortal />} />
 
             {/* Protected: admin only */}
@@ -44,6 +47,14 @@ export default function App() {
               element={
                 <ProtectedRoute role="admin">
                   <Inventory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/volunteers"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminVolunteers />
                 </ProtectedRoute>
               }
             />
